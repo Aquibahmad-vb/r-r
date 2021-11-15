@@ -1,7 +1,8 @@
-const rewardModal = require("../modal/rewardsmodal");
+const rewardsModal = require("../modal/rewardsmodal");
+
 const storeReward = async (req, res) => {
     try {
-        const rewardDetails = await new rewardModal(req.body);
+        const rewardDetails = await new rewardsModal(req.body);
         rewardDetails.save((err,rewardDetails)=> {
           if(err)
           res.status(401).send(err);
