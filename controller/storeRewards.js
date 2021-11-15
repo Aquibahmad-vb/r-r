@@ -1,3 +1,4 @@
+const rewardModal = require("../modal/rewardsmodal");
 const storeReward = async (req, res) => {
     try {
         const rewardDetails = await new rewardModal(req.body);

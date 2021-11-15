@@ -1,3 +1,4 @@
+const rewardModal = require("../modal/rewardsmodal");
 const getRewards = async (req, res) => {
     try {
         const rewards = await rewardModal.find({});
