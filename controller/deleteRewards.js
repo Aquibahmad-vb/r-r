@@ -3,10 +3,10 @@ const rewardsModal = require("../modal/rewardsmodal");
 const deleteReward = async (req, res) => {
     try{
         // find and delete reward by id
-        const users = await rewardsModal.findOneAndDelete({_id:req.params.id});
+        const rewards = await rewardsModal.findOneAndDelete({_id:req.params.id});
 
         // if id not match in db then send response id not found
-        if(users===null){
+        if(rewards===null){
             
             return res.status(404).send("id not found")
         }
