@@ -40,6 +40,11 @@ reward_name: {
     type: String,
    required: true
   },
+    status: {
+    type: String,
+    enum: ["Draft","Stop","Launch"],
+    default: "Draft"
+  },
   },
   {
     timestamps: true
