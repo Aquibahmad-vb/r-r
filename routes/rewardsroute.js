@@ -18,7 +18,7 @@ Router.post("/rewards/create", storeReward);
 Router.get("/rewards/:id", getRewardDetail);
 Router.put("/rewards/:id/edit", editReward);
 Router.delete("/rewards/:id", deleteReward);
-Router.post("/rewards/:id/launch",launchRewards);
+Router.put("/rewards/:id/launch",launchRewards);
 
 
 // exporting end points
