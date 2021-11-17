@@ -34,12 +34,10 @@
                   "200":{
                       "description":"OK",
                       "schema":{
-                          "$ref":"#/definitions/Reward"
+                          "$ref":"#/definitions/Rewards"
                       }
                   }
               }
-  
-  
           }
   
       },
@@ -61,14 +59,19 @@
                   }
               ],
               "produces":[
-                  "application/json"
+                  "application/json",
+                  "application/xml"
               ],
               "responses":{
                   "201":{
                       "description":"new reward is created",
+                      "content":{
+                          "application/json":{
                       "schema":{
                           "$ref":"#/definitions/Reward"
                       }
+                    }
+                }
                   },
                   "401":{
                       "description":"some fields are missing"
@@ -199,8 +202,7 @@
               "slack_channel",
               "channel_message",
               "_id"
-          ]
-      },
+          ],
       "properties":{
           "_id":{
               "type":"string",
@@ -243,5 +245,10 @@
               "type": "string"
           }
       }
+    },
+    "Rewards": {
+        "type": "array",
+        "$ref": "#/definitions/Reward"
     }
-  }
+}
+}
