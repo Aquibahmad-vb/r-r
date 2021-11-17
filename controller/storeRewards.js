@@ -5,11 +5,9 @@ const storeReward = async (req, res) => {
         const rewardDetails = await new rewardsModal(req.body);
         rewardDetails.save((err,rewardDetails)=> {
           if(err)
-          res.status(401).send(err);
+          res.status(401).send('Required field is missing');
           res.status(201).send(rewardDetails);
         });
-    
-       // res.status(201).send(rewardDetails);
       } catch (error) {
         res.send(error);
       }

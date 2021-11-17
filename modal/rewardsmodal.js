@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 // creating rewards schema
 const rewardsSchema = mongoose.Schema({
-reward_name: {
+  reward_name: {
     type: String,
-   required: true
+    required: true
   },
   reward_display_name: {
     type: String,
@@ -16,12 +16,12 @@ reward_name: {
   },
   reward_sender: {
     type: String,
-    enum:["Leadership","Manager"],
+    enum: ["Leadership", "Manager"],
     required: true
   },
   recepients: {
-      type: [String],
-      enum: ["Manager","Employee","Selected"],
+    type: [String],
+    enum: ["Manager", "Employee", "Selected"],
     required: true
   },
   receiver_message: {
@@ -38,14 +38,14 @@ reward_name: {
   },
   channel_message: {
     type: String,
-   required: true
+    required: true
   },
-    status: {
+  status: {
     type: String,
-    enum: ["Draft","Stop","Launch"],
+    enum: ["Draft", "Stop", "Launch"],
     default: "Draft"
   },
-  },
+},
   {
     timestamps: true
   }
