@@ -1,0 +1,247 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Rewards Apis",
+      "description": "documentation for rewards apis"
+    },
+    "host": "localhost:3000",
+  
+    "tags": [
+      {
+        "name": "Rewards",
+        "description": "rewards apis"
+      }
+    ],
+    "schemes": [
+      "http"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/rewards":{
+          "get":{
+              "tags":[
+                  "Rewards"
+              ],
+              "description":"get all rewards",
+              "summary":"all rewards",
+              "responses":{
+                  "200":{
+                      "description":"OK",
+                      "schema":{
+                          "$ref":"#/definitions/Reward"
+                      }
+                  }
+              }
+  
+  
+          }
+  
+      },
+      "/rewards/create":{
+          "post":{
+              "tags":[
+                  "Rewards"
+              ],
+              "description":"create a new reward",
+              "summary":"create a new reward",
+              "parameters":[
+                  {
+                      "name":"reward data",
+                      "in":"body",
+                      "description":"reward that we want to create",
+                      "schema":{
+                          "$ref":"#/definitions/Reward"
+                      }
+                  }
+              ],
+              "produces":[
+                  "application/json"
+              ],
+              "responses":{
+                  "201":{
+                      "description":"new reward is created",
+                      "schema":{
+                          "$ref":"#/definitions/Reward"
+                      }
+                  },
+                  "401":{
+                      "description":"some fields are missing"
+                  }
+              }
+          }
+  
+      },
+      "/rewards/{id}/edit":{
+          "parameters":[
+              {
+                  "name":"id",
+                  "in":"path",
+                  "required":true,
+                  "description":"reward id which we want to update",
+                  "type":"string"
+              }
+          ],
+          "put":{
+              "tags":[
+                  "Rewards"
+              ],
+              "summary":"update/edit reward by id",
+              "parameters":[
+                  {
+                      "name":"update reward",
+                      "in":"body",
+                      "description":"updated reward value",
+                      "schema":{
+                          "$ref":"#/definitions/Reward"
+                      }
+                  }
+              ],
+              "responses":{
+                  "202":{
+                      "description":"reward updated"
+                  },
+                  "404":{
+                      "description":"rewards not found"
+                  }
+                  
+              }
+          }
+          
+      },
+      "/rewards/{id}/launch":{
+          "parameters":[
+              {
+                  "name":"id",
+                  "in":"path",
+                  "description":"reward which we want to find",
+                  "type":"string"
+              }
+          ],
+          "put":{
+              "tags":[
+                  "Rewards"
+              ],
+              "summary":"launch reward",
+              "responses":{
+                  "202":{
+                      "description":"reward status changed to launch"
+                  },
+                  "200":{
+                      "description":"reward already in launched"
+                  },
+                  "404":{
+                      "description":"rewards not found"
+                  }
+              }
+          }
+      },
+      "/rewards/{id}":{
+          "parameters":[
+              {
+                  "name":"id",
+                  "in":"path",
+                  "description":"reward which we want to find",
+                  "type":"string"
+              }
+          ],
+          "get":{
+              "tags":[
+                  "Rewards"
+              ],
+              "summary":"get rewards by id",
+              "responses":{
+                  "200":{
+                      "description":"reward found",
+                      "schema":{
+                          "$ref":"#/definitions/Reward"
+                      }
+                  },
+                  "404":{
+                      "description":"rewards not found"
+                  }
+              }
+          },
+          "delete":{
+              "tags":[
+                  "Rewards"
+              ],
+              "summary":"delete rewards by id",
+              "responses":{
+                  "200":{
+                      "description":"reward deleted",
+                      "schema":{
+                          "$ref":"#/definitions/Reward"
+                      }
+                  },
+                  "404":{
+                      "description":"rewards not found"
+                  }
+              }
+          }
+      }
+    },
+    "definitions": {
+      "Reward": {
+          "required": [
+              "reward_name",
+              "reward_display_name",
+              "reward_type",
+              "reward_sender",
+              "recepients",
+              "receiver_message",
+              "announcement_type",
+              "slack_channel",
+              "channel_message",
+              "_id"
+          ]
+      },
+      "properties":{
+          "_id":{
+              "type":"string",
+              "uniqueItems": "true"
+          },
+          "reward_name":{
+              "type": "string"
+          },
+          "reward_display_name":{
+              "type": "string"
+          },
+          "reward_type":{
+              "type": "string"
+          },
+          "reward_sender":{
+              "type": "string"
+          },
+          "recepients":{
+              "type": "array"
+          },
+          "receiver_message":{
+              "type": "string"
+          },
+          "announcement_type":{
+              "type": "string"
+          },
+          "slack_channel":{
+              "type": "string"
+          },
+          "channel_message":{
+              "type": "string"
+          },
+          "satus":{
+              "type": "string"
+          },
+          "createdAt":{
+              "type": "string"
+          },
+          "updatedAt":{
+              "type": "string"
+          }
+      }
+    }
+  }

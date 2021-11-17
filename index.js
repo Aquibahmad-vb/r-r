@@ -2,13 +2,16 @@ const express = require("express");
 const mongoose = require("mongoose");
 const rewardsRouter = require("./routes/rewardsroute");
 require('dotenv').config();
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 const app = express();
-const port=process.env.port||3001
+const port=process.env.port || 3001
 const db = mongoose.connection;
 app.use(express.json());
 
 app.get("/", (req, res) => res.send(`app listening on ${port} port`));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(rewardsRouter);
 
 
