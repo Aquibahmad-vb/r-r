@@ -4,6 +4,8 @@ let chaiHttp = require('chai-http');
 let server = require('../index');
 chai.should();
 chai.use(chaiHttp);
+
+let rewardId;
 describe('test api', () => {
 
     /* GET all rewards */
@@ -29,34 +31,9 @@ describe('test api', () => {
         });
     });
 
-    /* GET reward by Id */
-    describe('GET /rewards/:id', () => {
-        it('It should get the reward by id', (done) => {
-            const rewardId = '61936f4a51974d45e3772a90';
-            chai.request(server)
-                .get('/rewards/' + rewardId)
-                .end((err, response) => {
-                    response.body.should.be.a('object');
-                    response.should.have.status(200);
-                    response.body.should.have.property('_id');
-                    response.body.should.have.property('_id').eq('61936f4a51974d45e3772a90');
-                    done();
-                });
-        });
-        it('It should not get the reward by id', (done) => {
-            const rewardId = '34655';
-            chai.request(server)
-                .get('/rewards/' + rewardId)
-                .end((err, response) => {
-                    response.should.have.status(404);
-                    response.text.should.be.eq("Id not Found");
-                    done();
-                });
-        });
-    });
 
     /* POST a reward */
-    describe('POST /rewards', () => {
+    describe('POST /rewards/create', () => {
         it('It should post the reward', (done) => {
             const reward = {
                 reward_name: "ytuderd",
@@ -73,6 +50,7 @@ describe('test api', () => {
                 .post('/rewards/create')
                 .send(reward)
                 .end((err, response) => {
+                    rewardId = response.body._id;
                     response.body.should.be.a('object');
                     response.should.have.status(201);
                     response.body.should.have.property('_id');
@@ -108,6 +86,31 @@ describe('test api', () => {
                 .end((err, response) => {
                     response.should.have.status(401);
                     response.text.should.be.eq("Required field is missing");
+                    done();
+                });
+        });
+    });
+
+    /* GET reward by Id */
+    describe('GET /rewards/:id', () => {
+        it('It should get the reward by id', (done) => {
+            chai.request(server)
+                .get('/rewards/' + rewardId)
+                .end((err, response) => {
+                    response.body.should.be.a('object');
+                    response.should.have.status(200);
+                    response.body.should.have.property('_id');
+                    response.body.should.have.property('_id').eq(rewardId);
+                    done();
+                });
+        });
+        it('It should not get the reward by id', (done) => {
+            rewardId = '34655';
+            chai.request(server)
+                .get('/rewards/' + rewardId)
+                .end((err, response) => {
+                    response.should.have.status(404);
+                    response.text.should.be.eq("Id not Found");
                     done();
                 });
         });
