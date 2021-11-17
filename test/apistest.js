@@ -70,8 +70,7 @@ const updateddata={
             });   
         });
     });
-    // describe('get /rewards/:id/edit',()=>{
-    // });
+
     describe('launch /rewards/:id/launch', () => {
         it('It launch reward by id',(done)=>{
             chai.request(app)
@@ -104,30 +103,6 @@ const updateddata={
         });
     });
 
-    // describe('launch /rewards/:id/launch', () => {
-    //     it('It return reward already launch',(done)=>{
-    //         chai.request(app)
-    //         .put('/rewards/'+id+'/launch')
-    //         .end((err,res)=>{
-    //             res.should.have.status(200);
-    //             res.text.should.be.equal(`rewards are already launch`)
-    //             done()
-    //         });
-    //     });
-    // });
-
-    // describe('get /rewards/:id/launch',()=>{
-    //     it('it should not launch reward',(done)=>{
-    //         chai.request(app)
-    //         .put('/rewards/'+id+'1/launch')
-    //         .end((err,res)=>{
-    //             res.should.have.status(404);
-    //             res.text.should.be.eq("Id not Found");
-    //             done()
-    //         });   
-    //     });
-    // });
-
     describe('delete /rewards/:id', () => {
         it('It delete rewards by id ',(done)=>{
             chai.request(app)
@@ -149,16 +124,4 @@ const updateddata={
         });
         
     });
-
-    // describe('delete /rewards/:id',()=>{
-    //     it('it should not delete rewards by id',(done)=>{
-    //         chai.request(app)
-    //         .delete('/rewards/'+id+'1')
-    //         .end((err,res)=>{
-    //             res.should.have.status(404);
-    //             res.text.should.be.eq("Id not Found");
-    //             done()
-    //         });   
-    //     });
-    // });
 });
