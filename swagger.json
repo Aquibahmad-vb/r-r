@@ -190,6 +190,7 @@
     },
     "definitions": {
       "Reward": {
+        "type": "object",
           "required": [
               "reward_name",
               "reward_display_name",
@@ -199,8 +200,7 @@
               "receiver_message",
               "announcement_type",
               "slack_channel",
-              "channel_message",
-              "_id"
+              "channel_message"
           ],
       "properties":{
           "_id":{
@@ -217,11 +217,17 @@
               "type": "string"
           },
           "reward_sender":{
-              "type": "string"
-          },
-          "recepients":{
-              "type": "array"
-          },
+            "type": "array",
+            "enum": [
+                "Manager","Leadership"
+            ]
+        },
+        "recepients":{
+            "type": "array",
+            "enum": [
+                "Manager","Empolyee","Selected"
+            ]
+        },
           "receiver_message":{
               "type": "string"
           },
@@ -234,15 +240,21 @@
           "channel_message":{
               "type": "string"
           },
-          "satus":{
-              "type": "string"
-          },
+          "status": {
+            "type":"string",
+            "enum": [
+                "Draft","Launch","Stop"
+            ]
+        },
           "createdAt":{
               "type": "string"
           },
           "updatedAt":{
               "type": "string"
-          }
+          },
+          "employee_id":{
+            "type":"integer"
+        }
       }
     },
     "Rewards": {

@@ -45,6 +45,9 @@ const rewardsSchema = mongoose.Schema({
     enum: ["Draft", "Stop", "Launch"],
     default: "Draft"
   },
+  employee_id:{
+    type: Number
+}
 },
   {
     timestamps: true
