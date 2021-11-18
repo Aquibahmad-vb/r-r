@@ -122,6 +122,7 @@
               {
                   "name":"id",
                   "in":"path",
+                  "required":true,
                   "description":"reward which we want to find",
                   "type":"string"
               }
@@ -149,6 +150,7 @@
               {
                   "name":"id",
                   "in":"path",
+                  "required":true,
                   "description":"reward which we want to find",
                   "type":"string"
               }
