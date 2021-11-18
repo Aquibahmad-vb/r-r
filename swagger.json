@@ -177,10 +177,7 @@
               "summary":"delete rewards by id",
               "responses":{
                   "200":{
-                      "description":"reward deleted",
-                      "schema":{
-                          "$ref":"#/definitions/Reward"
-                      }
+                      "description":"reward deleted"
                   },
                   "404":{
                       "description":"rewards not found"
