@@ -1,8 +1,18 @@
 const express = require("express");
-
+const mongoose = require("mongoose");
 const Router = express.Router();
 
-// requiring routes function from users controller
+const {
+  storeSignup,
+  userLogin,
+  
+} = require("../controller/user");
+Router.post("/signup", storeSignup);
+Router.post("/login", userLogin);
+
+
+
+// requiring routes function from rewards controller
 const {
   storeReward,
   getRewards,
