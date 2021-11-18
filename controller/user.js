@@ -2,6 +2,7 @@ const signupUser = require("../modal/usermodal");
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
+const { use } = require("chai");
 
 const storeSignup = async (req, res, next) => {
     signupUser.find({ email: req.body.email })
@@ -21,7 +22,8 @@ const storeSignup = async (req, res, next) => {
                         const user = new signupUser({
                             _id: new mongoose.Types.ObjectId(),
                             email: req.body.email,
-                            password: hash
+                            password: hash,
+                            role:req.body.role
                         });
                         user
                             .save()
@@ -50,31 +52,42 @@ const userLogin = async (req, res, next) => {
         .then(user => {
             if (user.length < 1) {
                 return res.status(401).json({
-                    message: 'Auth failed'
+                    message: 'login failed'
                 });
             }
             bcrypt.compare(req.body.password, user[0].password, (err, result) => {
                 if (err) {
                     return res.status(401).json({
-                        message: 'Auth failed'
+                        message: 'login failed'
                     });
                 }
                 if (result) {
-                  const token = jwt.sign({
-                        email: user[0].email,
-                        userId: user[0]._id
-                    }, process.env.JWT_KEY,
+                    const payload={
+                        user:{
+                            email:user[0].email,
+                            userId:user[0]._id
+                        }
+                    }
+                  const token = jwt.sign(payload, process.env.JWT_KEY,
                     {
-                        expiresIn:"1h"
+                        expiresIn:"2d"
                     }
                     )
+                    signupUser.findOneAndUpdate({ email: req.body.email },{$set:{token}})
+                    .exec()
+                    .then((user)=>{
+                        user.save()
+                        })
+                        .catch(err=>{
+                            console.log(err.message)
+                        })
                     return res.status(200).json({
-                        message: 'Auth successful',
+                        message: 'login successful',
                         token: token
                     });
                 }
                 res.status(401).json({
-                    message: 'Auth failed'
+                    message: 'login failed'
                    
                 });
             });

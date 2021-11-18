@@ -24,6 +24,15 @@
     ],
     "paths": {
       "/rewards":{
+        "parameters":[
+            {
+                "name":"auth",
+                "in":"header",
+                "description":"token authorization",
+                "required":true,
+                "type":"string"
+            }
+        ],
           "get":{
               "tags":[
                   "Rewards"
@@ -42,6 +51,15 @@
   
       },
       "/rewards/create":{
+        "parameters":[
+            {
+                "name":"auth",
+                "in":"header",
+                "description":"token authorization",
+                "required":true,
+                "type":"string"
+            }
+        ],
           "post":{
               "tags":[
                   "Rewards"
@@ -83,6 +101,13 @@
       "/rewards/{id}/edit":{
           "parameters":[
               {
+                "name":"auth",
+                "in":"header",
+                "description":"token authorization",
+                "required":true,
+                "type":"string"
+            },
+              {
                   "name":"id",
                   "in":"path",
                   "required":true,
@@ -120,12 +145,19 @@
       "/rewards/{id}/launch":{
           "parameters":[
               {
-                  "name":"id",
-                  "in":"path",
-                  "required":true,
-                  "description":"reward which we want to find",
-                  "type":"string"
-              }
+                "name":"auth",
+                "in":"header",
+                "description":"token authorization",
+                "required":true,
+                "type":"string"
+            },
+              {
+                "name":"id",
+                "in":"path",
+                "required":true,
+                "description":"reward which we want to find",
+                "type":"string"
+            }
           ],
           "put":{
               "tags":[
@@ -147,6 +179,13 @@
       },
       "/rewards/{id}":{
           "parameters":[
+              {
+                  "name":"auth",
+                  "in":"header",
+                  "description":"token authorization",
+                  "required":true,
+                  "type":"string"
+              },
               {
                   "name":"id",
                   "in":"path",
