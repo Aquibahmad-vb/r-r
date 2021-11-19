@@ -3,16 +3,6 @@ const mongoose = require("mongoose");
 const Router = express.Router();
 const auth=require("../middleware/auth")
 
-// const {
-//   storeSignup,
-//   userLogin,
-  
-// } = require("../controller/user");
-// Router.post("/signup", storeSignup);
-// Router.post("/login", userLogin);
-
-
-
 // requiring routes function from rewards controller
 const {
   storeReward,

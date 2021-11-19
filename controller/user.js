@@ -29,7 +29,7 @@ const storeSignup = async (req, res, next) => {
                             .save()
                             .then(result => {
                                 console.log(result);
-                                res.status(500).json({
+                                res.status(201).json({
                                     message: 'user created'
                                 });
                             })
@@ -81,7 +81,7 @@ const userLogin = async (req, res, next) => {
                         .catch(err=>{
                             console.log(err.message)
                         })
-                    return res.status(200).json({
+                    return res.status(201).json({
                         message: 'login successful',
                         token: token
                     });
