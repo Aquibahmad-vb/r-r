@@ -70,7 +70,7 @@ const userLogin = async (req, res, next) => {
                     }
                   const token = jwt.sign(payload, process.env.JWT_KEY,
                     {
-                        expiresIn:"2d"
+                        expiresIn:"2m"
                     }
                     )
                     signupUser.findOneAndUpdate({ email: req.body.email },{$set:{token}})

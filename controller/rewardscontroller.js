@@ -6,7 +6,7 @@ const editReward=require("./editReward");
 const deleteReward=require("./deleteRewards");
 const launchRewards=require("./launchReward");
 const {storeSignup,userLogin}=require("./user");
-
+const searchRewards=require("./searchReward");
     
 
 
@@ -18,5 +18,6 @@ module.exports = {
     deleteReward,
     launchRewards,
     storeSignup,
-    userLogin
+    userLogin,
+    searchRewards
 };
