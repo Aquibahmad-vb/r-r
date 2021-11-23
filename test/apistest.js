@@ -2,6 +2,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app=require("../index");
 const userModal = require('../modal/usermodal');
+const rewardsModal = require("../modal/rewardsmodal");
 
 chai.should();
 chai.use(chaiHttp);
@@ -16,7 +17,7 @@ const data={
     "announcement_type": "def",
     "slack_channel": "#birthday",
     "channel_message": "def messsage",
-    "employee_id":6
+    "employee_id":101
 }
 let id;
 let dummyreward;
@@ -27,6 +28,17 @@ describe('rewards apis',async() => {
     const user=await userModal.findOne({email:"th@gmail.com"})
     // const admin.token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYXFAZ21haWwuY29tIiwidXNlcklkIjoiNjE5OGYwY2E0ODVkZTczNDQ0MjViMjRkIn0sImlhdCI6MTYzNzU3MjcwNywiZXhwIjoxNjM3NzQ1NTA3fQ.Sy-PJR0mnmFin5cKG-RN53m3pVjS4wPcJZQonFvfwRU'
     // const user.token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYXEyQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxOThmMjBiMWExMjU4MTc3MjQ2MjU5YSJ9LCJpYXQiOjE2Mzc1NzI3MDcsImV4cCI6MTYzNzc0NTUwN30.mpUGvyAYncWzfFiWsy8ggsZGox2cj4c17bxyyjTfGEk'
+    after('execute after all testcases',(done)=>{
+        userModal.findOneAndDelete({email:"thanuja2@gmail.com"})
+        .exec()
+        .then(()=>{
+            rewardsModal.findOneAndDelete({employee_id:101})
+            .exec()
+            .then(()=>{
+                done()
+            })
+        })
+    });
     describe('create /rewards/create', () => {
         it('create rewards',(done)=>{
             chai.request(app)
@@ -99,7 +111,7 @@ const updateddata={
     "announcement_type": "def",
     "slack_channel": "#birthday",
     "channel_message": "updated messsage",
-    "employee_id":6
+    "employee_id":101
 }
     describe("update /rewards/:id/edit",()=>{
         it("It update/edit rewards by id",(done)=>{
@@ -226,10 +238,58 @@ const updateddata={
                 .end((err, res) => {
                     res.body.should.be.a('array');
                     res.should.have.status(200);
+                    res.body.length.should.be.eql(10);
                     done();
                 });
         });
-
+        it("it should get all item sorted by name",(done)=>{
+            chai.request(app)
+            .get('/rewards')
+            .set({"auth": admin.token})
+            .query({"sort":"name"})
+            .end((err,res)=>{
+                res.body.should.be.a('array');
+                res.should.have.status(200);
+                res.body.length.should.be.eql(10)
+                done();
+            });
+        });
+        it("it should get all item sorted by id of page 2",(done)=>{
+            chai.request(app)
+            .get('/rewards')
+            .set({"auth": admin.token})
+            .query({"sort":"id","pageNo":"2"})
+            .end((err,res)=>{
+                res.body.should.be.a('array');
+                res.should.have.status(200);
+                res.body.length.should.be.eql(10)
+                done();
+            });
+        });
+        it("it should get all item sorted by date of page 2",(done)=>{
+            chai.request(app)
+            .get('/rewards')
+            .set({"auth": admin.token})
+            .query({"sort":"date","pageNo":"2"})
+            .end((err,res)=>{
+                res.body.should.be.a('array');
+                res.should.have.status(200);
+                res.body.length.should.be.eql(10)
+                done();
+            });
+        });
+        it("it should get all item of page 3",(done)=>{
+            chai.request(app)
+            .get('/rewards')
+            .set({"auth": admin.token})
+            .query({"pageNo":"3"})
+            .end((err,res)=>{
+                res.body.should.be.a('array');
+                res.should.have.status(200);
+                res.body.length.should.be.eql(10)
+                done();
+            });
+        });
         it('It should not get all the rewards', (done) => {
             chai.request(app)
                 .get('/reward')
