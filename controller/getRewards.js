@@ -10,14 +10,14 @@ const getRewards = async (req, res) => {
     if(!req.query.sort){
       rewards = await rewardsModal.find().skip(skip).limit(pageSize);
     }
-    if(req.query.sort==='rewards_name'){
-      rewards = await rewardsModal.find().skip(skip).sort({"reward_name":1}).limit(pageSize);
+    if(req.query.sort==='name'){
+      rewards = await rewardsModal.find().skip(skip).limit(pageSize).sort({"reward_name":1});
     }
     else if(req.query.sort==='date'){
-      rewards = await rewardsModal.find().skip(skip).sort({"createdAt":1}).limit(pageSize);
+      rewards = await rewardsModal.find().skip(skip).limit(pageSize).sort({"createdAt":1});
     }
     else if(req.query.sort==='id'){
-      rewards = await rewardsModal.find().skip(skip).sort({"_id":1}).limit(pageSize);
+      rewards = await rewardsModal.find().skip(skip).limit(pageSize).sort({"_id":1});
     }
     res.status(200).send(rewards);
     } catch (error) {
