@@ -11,7 +11,7 @@ let responseObj = {
 const searchRewards = (req, res, next) => {
     const rewardType = req.query.rewardTypeSearch; 
     try{
-        if(!req.query) {
+        if(!req.query.params) {
             responseObj = {
                 "status": "error",
                 "msg": "Input is missing.",
