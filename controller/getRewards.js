@@ -1,8 +1,8 @@
 const rewardsModal = require("../modal/rewardsmodal");
 
 const getRewards = async (req, res) => {
-  const currentPage = req.query.currentPage;
-  const pageSize = req.query.pageSize; 
+  const currentPage = parseInt(req.query.currentPage);
+  const pageSize = parseInt(req.query.pageSize); 
   const skip = pageSize * (currentPage-1);
   // const limit = pageSize;
   let rewards
