@@ -9,6 +9,7 @@ let responseObj = {
 }
 
 const searchRewards = (req, res, next) => {
+    const rewardType = req.query.rewardTypeSearch; 
     try{
         if(!req.body) {
             responseObj = {
@@ -19,8 +20,8 @@ const searchRewards = (req, res, next) => {
             res.status(500).send(responseObj);
         }else{
             //match
-
-            rewardsModal.find({reward_type: {$regex:req.query.search.trim(), $options: 'i'}}, (err, rewards) => {
+     
+            rewardsModal.find({reward_type: {$regex:rewardType.trim(), $options: 'i'}}, (err, rewards) => {
                 if(err) {
                     responseObj = {
                         "status": "error",
