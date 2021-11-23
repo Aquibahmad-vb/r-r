@@ -25,7 +25,7 @@ Router.delete("/rewards/:id",auth, deleteReward);
 Router.put("/rewards/:id/launch",auth, launchRewards);
 Router.post("/signup",storeSignup),
 Router.post("/login",userLogin);
-Router.post("/search",searchRewards);
+Router.get("/search",searchRewards);
 
 
 // exporting end points

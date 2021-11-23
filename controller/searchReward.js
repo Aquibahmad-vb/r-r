@@ -20,7 +20,7 @@ const searchRewards = (req, res, next) => {
         }else{
             //match
 
-            rewardsModal.find({reward_type: {$regex:req.body.search.text.trim(), $options: 'i'}}, (err, rewards) => {
+            rewardsModal.find({reward_type: {$regex:req.query.search.trim(), $options: 'i'}}, (err, rewards) => {
                 if(err) {
                     responseObj = {
                         "status": "error",
