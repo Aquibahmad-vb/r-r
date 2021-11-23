@@ -9,12 +9,13 @@ let responseObj = {
 }
 
 const searchRewards = (req, res, next) => {
-    const rewardType = req.query.rewardTypeSearch; 
+    const rewardType = req.query.search; 
     try{
-        if(!req.query.params) {
+        const rewardType = req.query.search; 
+        if(!req.query.search) {
             responseObj = {
                 "status": "error",
-                "msg": "Input is missing.",
+                "msg": "Query param is missing.",
                 "body": {}
             }
             res.status(500).send(responseObj);
@@ -33,6 +34,10 @@ const searchRewards = (req, res, next) => {
                         "status": "success",
                         "body": rewards
                     }
+                    if(rewards.length<1){
+                        res.status(401).send("No rewards found");
+                    }
+                    else
                     res.status(200).send(responseObj);
                 }
             })

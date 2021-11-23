@@ -7,8 +7,8 @@ chai.should();
 chai.use(chaiHttp);
 
 const userdata={
-    email:"aq4@gmail.com",
-    password:"aquib",
+    email:"thanuja2@gmail.com",
+    password:"thanu",
     role:"admin"
 
 }
@@ -40,8 +40,8 @@ describe('signup and login',()=>{
             chai.request(app)
             .post('/login')
             .send({
-                email:"aq4@gmail.com",
-                password:"aquib"
+                email:"thanuja2@gmail.com",
+                password:"thanu"
             })
             .end((err,res)=>{
                 res.should.have.status(201)
@@ -50,12 +50,12 @@ describe('signup and login',()=>{
                 done()
             });
         });
-        it('it should login user',(done)=>{
+        it('it should not login user',(done)=>{
             chai.request(app)
             .post('/login')
             .send({
-                email:"aq4@gmail.com",
-                password:"aqui"
+                email:"thanuja2@gmail.com",
+                password:"thanujjhgy"
             })
             .end((err,res)=>{
                 res.should.have.status(401)

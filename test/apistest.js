@@ -23,8 +23,8 @@ let dummyreward;
 
 
 describe('rewards apis',async() => {
-    const admin=await userModal.findOne({email:"aq@gmail.com"})
-    const user=await userModal.findOne({email:"aq2@gmail.com"})
+    const admin=await userModal.findOne({email:"thanu@gmail.com"})
+    const user=await userModal.findOne({email:"th@gmail.com"})
     // const admin.token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYXFAZ21haWwuY29tIiwidXNlcklkIjoiNjE5OGYwY2E0ODVkZTczNDQ0MjViMjRkIn0sImlhdCI6MTYzNzU3MjcwNywiZXhwIjoxNjM3NzQ1NTA3fQ.Sy-PJR0mnmFin5cKG-RN53m3pVjS4wPcJZQonFvfwRU'
     // const user.token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYXEyQGdtYWlsLmNvbSIsInVzZXJJZCI6IjYxOThmMjBiMWExMjU4MTc3MjQ2MjU5YSJ9LCJpYXQiOjE2Mzc1NzI3MDcsImV4cCI6MTYzNzc0NTUwN30.mpUGvyAYncWzfFiWsy8ggsZGox2cj4c17bxyyjTfGEk'
     describe('create /rewards/create', () => {
@@ -279,6 +279,39 @@ const updateddata={
                 res.should.have.status(401);
                 res.text.should.be.eq("not authorized user");
                 done()
+            });
+        });
+    });
+    describe('get /search', ()=>{
+        it('It search and give any matches found in reward_type', (done)=>{
+            chai.request(app)
+            .get('/search')
+            .query({search: 'an'})
+            .end((err,res)=>{
+                res.should.have.status(200);
+                done();
+            });
+        });
+        it('It search and give when no matches found in reward_type', (done)=>{
+            chai.request(app)
+            .get('/search')
+            .query({search: 'anrt'})
+            .end((err,res)=>{
+                res.should.have.status(401);
+                res.text.should.be.eq("No rewards found");
+                done();
+            });
+        });
+        it('It gives error when query is missing', (done)=>{
+            chai.request(app)
+            .get('/search')
+            .query()
+            .end((err,res)=>{
+                res.should.have.status(500);
+                res.body.should.be.a('object');
+                res.body.should.have.property('status').eq('error');
+                res.body.should.have.property('msg').eq('Query param is missing.');
+                done();
             });
         });
     });
