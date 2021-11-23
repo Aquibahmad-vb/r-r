@@ -17,7 +17,7 @@ const {
 } = require('../controller/rewardscontroller');
 
 // end points for Rewards crud operation
-Router.post("/rewards",auth,getRewards);
+Router.get("/rewards",auth,getRewards);
 Router.post("/rewards/create",auth, storeReward);
 Router.get("/rewards/:id",auth, getRewardDetail);
 Router.put("/rewards/:id/edit" ,auth, editReward);
