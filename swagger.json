@@ -39,6 +39,18 @@
               ],
               "description":"get all rewards",
               "summary":"all rewards",
+              "parameters":[
+                  {
+                      "name":"pageNo",
+                      "in":"query",
+                      "description":"page no"
+                  },
+                  {
+                      "name":"sort",
+                      "in":"query",
+                      "description":"sort by name id and date"
+                  }
+              ],
               "responses":{
                   "200":{
                       "description":"OK",
