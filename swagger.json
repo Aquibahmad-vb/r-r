@@ -238,6 +238,43 @@
               }
           }
       },
+      "/search":{
+        "parameters":[
+            {
+                "name":"auth",
+                "in":"header",
+                "description":"token authorization",
+                "required":true,
+                "type":"string"
+            }
+        ],
+          "get":{
+              "tags":[
+                  "Rewards"
+              ],
+              "description":"get searched rewards",
+              "summary":"searched rewards",
+              "parameters":[
+                  {
+                      "name":"search",
+                      "in":"query",
+                      "description":"search query"
+                  }
+              ],
+              "responses":{
+                  "200":{
+                      "description":"OK",
+                      "schema":{
+                          "$ref":"#/definitions/Rewards"
+                      },
+                        "401":{
+                      "description":"No rewards found"
+                  }
+                  }
+              }
+          }
+  
+      },
       "/signup":{
         "post":{
             "tags":[

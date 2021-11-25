@@ -346,6 +346,7 @@ const updateddata={
         it('It search and give any matches found in reward_type', (done)=>{
             chai.request(app)
             .get('/search')
+            .set({"auth":admin.token})
             .query({search: 'an'})
             .end((err,res)=>{
                 res.should.have.status(200);
@@ -355,6 +356,7 @@ const updateddata={
         it('It search and give when no matches found in reward_type', (done)=>{
             chai.request(app)
             .get('/search')
+            .set({"auth":admin.token})
             .query({search: 'anrt'})
             .end((err,res)=>{
                 res.should.have.status(401);
@@ -365,6 +367,7 @@ const updateddata={
         it('It gives error when query is missing', (done)=>{
             chai.request(app)
             .get('/search')
+            .set({"auth":admin.token})
             .query()
             .end((err,res)=>{
                 res.should.have.status(500);
