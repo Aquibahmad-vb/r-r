@@ -1,35 +1,62 @@
 const rewardsModal = require("../modal/rewardsmodal");
 
 const getRewards = async (req, res) => {
-  const pageSize=10;
-  let pageNo=1;
-  pageNo = parseInt(req.query.pageNo);
-  // pageSize = parseInt(req.query.pageSize); 
-  const skip = pageSize * (pageNo-1);
-  let rewards
-  
+  // console.log("here===",req.user)
+  let query = [
+    {
+      $match: {
+        reward_name: { $regex: "" },
+      },
+    },
+  ];
+  if (req.query.status) {
+    query.push({
+      $match: {
+        status: req.query.status,
+      },
+    });
+  }
+
+  if (req.query.startdate && req.query.enddate) {
+    query.push({
+      $match: {
+        createdAt: {
+          $gte: new Date(req.query.startdate),
+          $lt: new Date(req.query.enddate),
+        },
+      },
+    });
+  }
+
+  if (req.query.sortBy) {
+    let sortOrder = 1;
+    if (req.query.sortOrder === "desc") sortOrder = -1;
+    const sort = {};
+    sort[req.query.sortBy] = sortOrder;
+    query.push({
+      $sort: sort,
+    });
+  } else {
+    query.push({
+      $sort: { createdAt: 1 },
+    });
+  }
+  const limit = 10;
+  const page = req.query.page ? parseInt(req.query.page) : 1;
+  const skip = (page - 1) * limit;
+  query.push({
+    $skip: skip,
+  });
+  query.push({
+    $limit: limit,
+  });
   try {
-  if(req.query){
-    if(!req.query.sort){
-      rewards = await rewardsModal.find({}).skip(skip).limit(pageSize);
-    }
-    if(req.query.sort==="name"){
-      rewards = await rewardsModal.find({}).skip(skip).limit(pageSize).sort({"reward_name":1});
-    }
-    else if(req.query.sort==="id"){
-      rewards = await rewardsModal.find({}).skip(skip).limit(pageSize).sort({"_id":1});
-    }
-    else if(req.query.sort==="date"){
-      rewards = await rewardsModal.find({}).skip(skip).limit(pageSize).sort({"createdAt":1});
-    }
-  }
-  else{
-    rewards=await rewardsModal.find({}).skip(skip).limit(pageSize);
-  }
+    // console.log(query)
+    const rewards = await rewardsModal.aggregate(query);
     res.status(200).send(rewards);
-    } catch (error) {
-      res.status(401).send(error);
-    }
+  } catch (error) {
+    res.status(401).send(error);
+  }
 };
 
-module.exports=getRewards;
+module.exports = getRewards;
